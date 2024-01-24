@@ -1,61 +1,63 @@
 import { useState } from "react";
 
-const SignIn = ({ handleSignIn }) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [name, setName] = useState("");
+type HandleSignInFunction = (
+  name: string,
+  email: string,
+  password: string,
+) => void;
 
-    const handleSubmit = async () => {
-        try {
-            await handleSignIn(
-                name,
-                email,
-                password,
-            );
-        } catch (error) {
-            console.log(error);
-        }
-    };
+const SignIn = ({ handleSignIn }: { handleSignIn: HandleSignInFunction }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
-    return (
-        <div className="flex flex-col justify-center items-center bg-zinc-800 rounded-lg shadow-lg p-4 m-4">
-            <form onSubmit={handleSubmit}>
-                <h1 className="text-2xl text-white">Sign In</h1>
+  const handleSubmit = async () => {
+    try {
+      handleSignIn(name, email, password);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-                <input
-                    type="text"
-                    placeholder="Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="rounded-lg shadow-lg p-2 m-4"
-                />
+  return (
+    <div className="m-4 flex flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg">
+      <form onSubmit={handleSubmit}>
+        <h1 className="text-2xl text-white">Sign In</h1>
 
-                <input
-                    type="email"
-                    placeholder="E-mail"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="rounded-lg shadow-lg p-2 m-4"
-                />
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="m-4 rounded-lg p-2 shadow-lg"
+        />
 
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="rounded-lg shadow-lg p-2 m-4"
-                />
+        <input
+          type="email"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="m-4 rounded-lg p-2 shadow-lg"
+        />
 
-                <button
-                    type="button"
-                    onClick={handleSubmit}
-                    className="rounded-lg shadow-lg p-4 m-4 bg-zinc-900 text-white hover:bg-zinc-700"
-                >
-                    Sign In
-                </button>
-            </form>
-        </div>
-    );
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="m-4 rounded-lg p-2 shadow-lg"
+        />
+
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className="m-4 rounded-lg bg-zinc-900 p-4 text-white shadow-lg hover:bg-zinc-700"
+        >
+          Sign In
+        </button>
+      </form>
+    </div>
+  );
 };
 
 export default SignIn;
