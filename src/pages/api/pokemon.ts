@@ -20,7 +20,9 @@ export default async function handler(
     const pokemonList = data.results;
 
     const pokemonData = await Promise.all(
-      pokemonList.map((pokemon: { url: string; }) => getPokemonData(pokemon.url)),
+      pokemonList.map((pokemon: { url: string }) =>
+        getPokemonData(pokemon.url),
+      ),
     );
 
     const responseData = {
@@ -47,11 +49,13 @@ async function getPokemonData(url: string) {
     id: details.id,
     name: details.name,
     image: details.sprites.front_default,
-    type: details.types.map((type: { type: { name: unknown; }; }) => type.type.name).join(", "),
+    type: details.types
+      .map((type: { type: { name: unknown } }) => type.type.name)
+      .join(", "),
     weight: details.weight,
     height: details.height,
     abilities: details.abilities
-      .map((ability: { ability: { name: unknown; }; }) => ability.ability.name)
+      .map((ability: { ability: { name: unknown } }) => ability.ability.name)
       .join(", "),
   };
 }
