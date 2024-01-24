@@ -23,7 +23,12 @@ export default async function handler(
       pokemonList.map((pokemon: { url: string; }) => getPokemonData(pokemon.url)),
     );
 
-    res.status(200).json(pokemonData);
+    const responseData = {
+      message: "Pokemon data fetched successfully",
+      data: pokemonData,
+    };
+
+    res.status(200).json(responseData);
   } catch (error) {
     console.error("Error fetching Pokemon data", error);
     res.status(500).json({ message: "Error fetching Pokemon data" });
