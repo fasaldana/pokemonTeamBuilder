@@ -13,7 +13,7 @@ const Pokedex = () => {
   useEffect(() => {
     const request = async () => {
       const result = await fetch("/api/pokemon");
-      const resultJson = await result.json();
+      const resultJson = await result.json() as { id: number, image: string; name: string; types: string }[];
       setPokemon(resultJson);
       setLoading(false);
     };
@@ -50,7 +50,7 @@ const Pokedex = () => {
             pokemonType: poke.types,
             pokemonImg: poke.image,
           };
-          void fetch(`/api/teams/${JSON.parse(localStorage.getItem("user"))["id"]}`, {
+          void fetch(`/api/teams/${JSON.parse(localStorage.getItem("user")).id}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

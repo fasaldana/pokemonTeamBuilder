@@ -39,7 +39,6 @@ export default function Home() {
   }
 
   const handleSignIn = async (name: string, email: string, password: string) => {
-    console.log("Sign In");
     try {
       const response = await fetch("/api/auth/signin", {
         method: "POST",
@@ -56,7 +55,6 @@ export default function Home() {
       setUser(result);
       localStorage.setItem("user", JSON.stringify(result));
     } catch (error) {
-      console.log(error);
       setErrorMessage("Error del servidor");
     }
   }

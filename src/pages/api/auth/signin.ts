@@ -24,9 +24,6 @@ export default async function handle(
         },
     });
 
-
-    console.log(createdUser);
-
     res.status(200).json(createdUser);
   } else {
     throw new Error(

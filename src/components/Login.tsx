@@ -1,45 +1,57 @@
 import { useState } from "react";
 
-const Login = ({ handleLogin, errorMessage }) => {
+type HandleLoginFunction = (email: string, password: string) => void;
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+const Login = ({
+  handleLogin,
+  errorMessage,
+}: {
+  handleLogin: HandleLoginFunction;
+  errorMessage: string;
+}) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        handleLogin(email, password);
-    }
-    
-    return (
-        <>
-            <div className="flex flex-col justify-center items-center">
-                <div className="flex flex-col justify-center items-center bg-zinc-800 rounded-lg shadow-lg p-4 m-4">
-                    <h1 className="text-2xl text-white">Login</h1>
-                    <form className="flex flex-col justify-center items-center" onSubmit={handleSubmit}>
-                        <input
-                            className="rounded-lg shadow-lg p-4 m-4"
-                            type="email"
-                            placeholder="Email"
-                            onChange={(event) => setEmail(event.target.value)}
-                        />
-                        <input
-                            className="rounded-lg shadow-lg p-4 m-4"
-                            type="password"
-                            placeholder="Password"
-                            onChange={(event) => setPassword(event.target.value)}
-                        />
-                        <button
-                            className="rounded-lg shadow-lg p-4 m-4 bg-zinc-900 text-white hover:bg-zinc-700"
-                            type="submit"
-                        >
-                            Login
-                        </button>
-                        {errorMessage ? <p className="text-red-500">{errorMessage}</p> : null}
-                    </form>
-                </div>
-            </div>
-        </>
-    );
+  const handleSubmit = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    handleLogin(email, password);
+  };
+
+  return (
+    <>
+      <div className="flex flex-col items-center justify-center">
+        <div className="m-4 flex flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg">
+          <h1 className="text-2xl text-white">Login</h1>
+          <form
+            className="flex flex-col items-center justify-center"
+            onSubmit={handleSubmit}
+          >
+            <input
+              className="m-4 rounded-lg p-4 shadow-lg"
+              type="email"
+              placeholder="Email"
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            <input
+              className="m-4 rounded-lg p-4 shadow-lg"
+              type="password"
+              placeholder="Password"
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <button
+              className="m-4 rounded-lg bg-zinc-900 p-4 text-white shadow-lg hover:bg-zinc-700"
+              type="submit"
+            >
+              Login
+            </button>
+            {errorMessage ? (
+              <p className="text-red-500">{errorMessage}</p>
+            ) : null}
+          </form>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Login;

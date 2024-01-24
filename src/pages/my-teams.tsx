@@ -2,12 +2,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const MyTeams = () => {
-  const [teams, setTeams] = useState([]);
+  const [teams, setTeams] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const request = async () => {
-      const result = await fetch(`/api/teams/${JSON.parse(localStorage.getItem("user"))["id"]}`);
+      const result = await fetch(`/api/teams/${JSON.parse(localStorage.getItem("user")).id}`);
       const resultJson = await result.json();
       setLoading(false);
       setTeams(resultJson);
@@ -16,9 +16,8 @@ const MyTeams = () => {
   }, []);
 
   const handleDeleteTeam = async (teamName: string) => {
-    console.log(teamName);
     try {
-      await fetch(`/api/teams/${JSON.parse(localStorage.getItem("user"))["id"]}`, {
+      await fetch(`/api/teams/${JSON.parse(localStorage.getItem("user")).id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +26,10 @@ const MyTeams = () => {
           teamName: teamName,
         }),
       });
-      window.location.reload();
+      // remove the team from the state
+      const newTeams = { ...teams };
+      delete newTeams[teamName];
+      setTeams(newTeams);
     } catch (error) {
       console.log(error);
     }
