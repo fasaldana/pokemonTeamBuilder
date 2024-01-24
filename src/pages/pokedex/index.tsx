@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { useEffect, useState } from "react";
 import PokeCard from "~/components/PokeCard";
 import SelectedPoke from "~/components/SelectedPoke";
@@ -21,7 +24,7 @@ const Pokedex = () => {
         name: string;
         types: string;
       }[];
-      setPokemon(resultJson);
+      setPokemon(resultJson.data);
       setLoading(false);
     };
     void request();

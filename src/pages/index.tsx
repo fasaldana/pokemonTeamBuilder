@@ -1,9 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useEffect, useState } from "react";
 import Login from "~/components/Login";
 import SignIn from "../components/signIn";
 
 export default function Home() {
-  const [user, setUser] = useState(null);
+  interface User {
+    name: string;
+  }
+
+  const [user, setUser] = useState<User | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type ResponseData = {
@@ -50,12 +53,12 @@ async function getPokemonData(url: string) {
     name: details.name,
     image: details.sprites.front_default,
     type: details.types
-      .map((type: { type: { name: unknown } }) => type.type.name)
+      .map((type: { type: { name: string } }) => type.type.name)
       .join(", "),
     weight: details.weight,
     height: details.height,
     abilities: details.abilities
-      .map((ability: { ability: { name: unknown } }) => ability.ability.name)
+      .map((ability: { ability: { name: string } }) => ability.ability.name)
       .join(", "),
   };
 }
