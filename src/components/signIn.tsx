@@ -49,7 +49,7 @@ const SignIn = ({ handleSignIn }) => {
                 <button
                     type="button"
                     onClick={handleSubmit}
-                    className="rounded-lg shadow-lg p-4 m-4 bg-zinc-900 text-white"
+                    className="rounded-lg shadow-lg p-4 m-4 bg-zinc-900 text-white hover:bg-zinc-700"
                 >
                     Sign In
                 </button>

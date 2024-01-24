@@ -16,14 +16,24 @@ export default async function handle(
     
     const { email, password } = req.body as User;
 
-    const fetchedUser = await prisma.user.findFirst({
+    try {
+      const fetchedUser = await prisma.user.findFirst({
         where: {
             email,
             password,
         },
-    });
+      });
 
-    res.status(200).json(fetchedUser);
+      if (!fetchedUser) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      res.status(200).json(fetchedUser);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+      console.log(error);
+    }
+    
   } else {
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`,
