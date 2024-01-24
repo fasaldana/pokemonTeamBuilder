@@ -29,8 +29,8 @@ export default async function handle(
       }
 
       res.status(200).json(fetchedUser);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    } catch (error: unknown) {
+      res.status(500).json({ error: (error as Error).message });
     }
     
   } else {
