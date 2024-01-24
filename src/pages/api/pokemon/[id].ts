@@ -18,16 +18,13 @@ export default async function handler(
     const resultJson: unknown = await result.json();
 
     const pokemon = {
-      growth_rate: resultJson?.growth_rate?.name ?? "",
-      description:
-        resultJson?.flavor_text_entries?.find(
-          (entry: { language: { name: string } }) =>
-            entry.language.name === "en",
-        )?.flavor_text ?? "",
-      egg_groups:
-        resultJson?.egg_groups
-          ?.map((eggGroup: { name: string }) => eggGroup.name)
-          .join(", ") ?? "",
+      growth_rate: resultJson.growth_rate.name,
+      description: resultJson.flavor_text_entries.find(
+        (entry: { language: { name: string } }) => entry.language.name === "en",
+      ).flavor_text,
+      egg_groups: resultJson.egg_groups
+        .map((eggGroup: { name: any }) => eggGroup.name)
+        .join(", "),
     };
 
     res.status(200).json(pokemon);
