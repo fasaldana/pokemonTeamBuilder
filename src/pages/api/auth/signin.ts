@@ -2,9 +2,9 @@ import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type User = {
-    name: string;
-    email: string;
-    password: string;
+  name: string;
+  email: string;
+  password: string;
 };
 
 const prisma = new PrismaClient();
@@ -17,11 +17,11 @@ export default async function handle(
     const { name, email, password } = req.body as User;
 
     const createdUser = await prisma.user.create({
-        data: {
-            name,
-            email,
-            password,
-        },
+      data: {
+        name,
+        email,
+        password,
+      },
     });
 
     res.status(200).json(createdUser);

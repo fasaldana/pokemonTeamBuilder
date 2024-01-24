@@ -51,7 +51,7 @@ async function getPokemonData(url: string) {
     weight: details.weight,
     height: details.height,
     abilities: details.abilities
-      .map((ability) => ability.ability.name)
+      .map((ability: { ability: { name: unknown; }; }) => ability.ability.name)
       .join(", "),
   };
 }
