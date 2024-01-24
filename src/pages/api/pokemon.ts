@@ -47,7 +47,7 @@ async function getPokemonData(url: string) {
     id: details.id,
     name: details.name,
     image: details.sprites.front_default,
-    type: details.types.map((type) => type.type.name).join(", "),
+    type: details.types.map((type: { type: { name: unknown; }; }) => type.type.name).join(", "),
     weight: details.weight,
     height: details.height,
     abilities: details.abilities
