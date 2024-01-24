@@ -12,33 +12,24 @@ model User {
   name      String
   email     String
   password  String
+  team      Team[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([name])
 }
 
-model Pokemon {
-  id        Int      @id @default(autoincrement())
-  name      String
-  number    Int
-  image     String
-  type      String
-  weight    String
-  height    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([name])
-}
-
-model PokemonUser {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  pokemonId Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Team {
+  id          Int      @id @default(autoincrement())
+  teamName    String
+  pokemonName String
+  pokemonId   Int
+  pokemonType String
+  pokemonImg  String
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@index([userId])
-  @@index([pokemonId])
 }
