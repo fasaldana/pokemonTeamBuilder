@@ -20,7 +20,7 @@ export default async function handler(
     const pokemonList = data.results;
 
     const pokemonData = await Promise.all(
-      pokemonList.map((pokemon) => getPokemonData(pokemon.url)),
+      pokemonList.map((pokemon: { url: string; }) => getPokemonData(pokemon.url)),
     );
 
     res.status(200).json(pokemonData);
