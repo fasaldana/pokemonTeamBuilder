@@ -1,11 +1,11 @@
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import Login from "~/components/Login";
-import SignIn from "./signIn";
+import SignIn from "../components/signIn";
 
 export default function Home() {
 
   const [user, setUser] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -26,6 +26,10 @@ export default function Home() {
           password: password,
         }),
       });
+      if (response.status === 404) {
+        setErrorMessage("Incorrect email or password");
+        return;
+      }
       const result = await response.json();
       setUser(result);
       localStorage.setItem("user", JSON.stringify(result));
@@ -50,8 +54,10 @@ export default function Home() {
       });
       const result = await response.json();
       setUser(result);
+      localStorage.setItem("user", JSON.stringify(result));
     } catch (error) {
       console.log(error);
+      setErrorMessage("Error del servidor");
     }
   }
 
@@ -74,7 +80,7 @@ export default function Home() {
         </div>
       ) : (
         <div className="flex flex-col justify-center items-center">
-          <Login handleLogin={handleLogin} />
+          <Login handleLogin={handleLogin} errorMessage={errorMessage} />
           <SignIn handleSignIn={handleSignIn} />
         </div>
       )}

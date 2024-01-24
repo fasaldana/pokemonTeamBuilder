@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Login = ({ handleLogin }) => {
+const Login = ({ handleLogin, errorMessage }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,11 +29,12 @@ const Login = ({ handleLogin }) => {
                             onChange={(event) => setPassword(event.target.value)}
                         />
                         <button
-                            className="rounded-lg shadow-lg p-4 m-4 bg-zinc-900 text-white"
+                            className="rounded-lg shadow-lg p-4 m-4 bg-zinc-900 text-white hover:bg-zinc-700"
                             type="submit"
                         >
                             Login
                         </button>
+                        {errorMessage ? <p className="text-red-500">{errorMessage}</p> : null}
                     </form>
                 </div>
             </div>
