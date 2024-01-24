@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const PokeCard = ({ id, name, image, types, handleSelectedPoke, height, weight, abilities, selectedNumber }:
     { id: number, name: string, image: string, types: string, height: number, weight: number, abilities: string, selectedNumber: number,
-        handleSelectedPoke: (image: string, name: string, isChecked: boolean, types: string) => void }) => {
+        handleSelectedPoke: (id: number, image: string, name: string, isChecked: boolean, types: string) => void }) => {
     const [isChecked, setIsChecked] = useState(false);
 
     const handleClick = () => {
@@ -13,7 +13,7 @@ const PokeCard = ({ id, name, image, types, handleSelectedPoke, height, weight, 
             return;
         }
         setIsChecked(!isChecked);
-        handleSelectedPoke(image, name, isChecked, types);
+        handleSelectedPoke(id, image, name, isChecked, types);
     }
 
     return (
