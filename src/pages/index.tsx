@@ -74,7 +74,7 @@ export default function Home() {
   };
 
   return (
-    <div className="m-4 flex h-full flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg">
+    <div className="m-4 flex flex-col items-center self-center justify-center rounded-lg bg-black bg-opacity-50">
       <h1 className="text-center text-4xl text-white">
         Welcome to the Pokedex
       </h1>
@@ -82,7 +82,7 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center">
           <h2 className="text-2xl text-white">Welcome {user.name}</h2>
           <button
-            className="rounded bg-orange-300 px-4 py-2 font-bold text-white hover:bg-orange-400"
+            className="mt-10 rounded bg-orange-300 px-4 py-2 font-bold text-white hover:bg-orange-400"
             onClick={handleSignOut}
           >
             Sign Out
