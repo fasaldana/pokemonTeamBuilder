@@ -17,7 +17,7 @@ const Team = ({
   return (
     <div
       key={teamName}
-      className="m-4 flex flex-col items-center justify-center p-4"
+      className="m-4 flex flex-col items-center justify-center p-4 capitalize"
     >
       <h1 className="text-xl text-white">{teamName}</h1>
       <div className="flex flex-wrap">

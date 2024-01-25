@@ -41,7 +41,7 @@ const PokeCard = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg w-auto">
+    <div className="flex flex-col capitalize items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg w-auto">
       <Image src={image} alt={name} width={200} height={200} />
       <h3 className="text-sm text-white">N° {id}</h3>
       <Link

@@ -21,7 +21,7 @@ const SelectedPoke = ({
   };
   
   return (
-    <div className="flex items-center w-full justify-between gap-x-4">
+    <div className="flex items-center w-full justify-between">
       <div
         className="h-20 w-20 rounded-full bg-white"
         style={{
@@ -32,7 +32,7 @@ const SelectedPoke = ({
       >
         <Image src={image} alt={name} width={300} height={300} />
       </div>
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-end capitalize">
         <h3 className="text-base text-white">{name}</h3>
         <h4 className="text-base text-orange-300 pt-1">{types}</h4>
         <button 
