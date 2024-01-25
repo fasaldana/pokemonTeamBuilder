@@ -14,7 +14,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Team | Record<string, Team[]> | Team[]>
+  res: NextApiResponse<Team>,
 ) {
   if (req.method === "POST") {
     const { teamName, pokemonName, pokemonId, pokemonType, pokemonImg } = req.body as { teamName: string, pokemonName: string, pokemonId: number, pokemonType: string, pokemonImg: string };
@@ -33,7 +33,7 @@ export default async function handler(
 
       res.status(200).json(team);
     } catch (error) {
-      console.log(error);
+      res.status(400).json(error);
     }
   } else if (req.method === "GET") {
     const { id } = req.query;
@@ -43,30 +43,31 @@ export default async function handler(
           userId: Number(id),
         },
       });
-      
-      const teamsByTeamName = teams.reduce((acc: Record<string, Team[]>, team) => {
-        const { teamName, pokemonName, pokemonId, pokemonType, pokemonImg } = team;
-        if (!acc[teamName]) {
-          acc[teamName] = [];
+
+      const teamsByTeamName = teams.reduce((acc, team) => {
+        if (!acc[team.teamName]) {
+          acc[team.teamName] = [];
         }
-        acc[teamName]?.push({ teamName, pokemonName, pokemonId, pokemonType, pokemonImg, userId: Number(id) });
+        acc[team.teamName].push(team);
         return acc;
       }, {});
 
       res.status(200).json(teamsByTeamName);
     } catch (error) {
-      console.log(error);
+      res.status(400).json(error);
     }
   } else if (req.method === "DELETE") {
     const { teamName } = req.body as { teamName: string };
     try {
-      await prisma.team.deleteMany({
+      const teams = await prisma.team.deleteMany({
         where: {
           teamName: String(teamName),
         },
       });
+
+      res.status(200).json(teams);
     } catch (error) {
-      console.log(error);
+      res.status(400).json(error);
     }
   }
 }
