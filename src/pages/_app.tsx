@@ -12,15 +12,12 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <meta name="description" content="Condorsoft technical test" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main
-        className="flex min-h-screen flex-col items-center bg-cover bg-fixed bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/bgImage.png')" }}
-      >
+      <main className="flex min-h-screen flex-col items-center bg-fixed bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/bgImage.png')" }}>
         <Navbar />
         <Component {...pageProps} />
       </main>
     </>
-  );
+  )
 };
 
 export default MyApp;

@@ -39,7 +39,7 @@ const Login = ({
               onChange={(event) => setPassword(event.target.value)}
             />
             <button
-              className="m-4 rounded-lg bg-zinc-900 p-4 text-white shadow-lg hover:bg-zinc-700"
+              className="m-4 rounded-lg bg-orange-300 px-4 py-2 font-bold text-white hover:bg-orange-400"
               type="submit"
             >
               Login

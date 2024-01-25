@@ -12,6 +12,7 @@ const PokeCard = ({
   weight,
   abilities,
   selectedNumber,
+  isChecked,
 }: {
   id: number;
   name: string;
@@ -21,27 +22,26 @@ const PokeCard = ({
   weight: number;
   abilities: string;
   selectedNumber: number;
+  isChecked: boolean;
   handleSelectedPoke: (
     id: number,
     image: string,
     name: string,
-    isChecked: boolean,
     types: string,
+    isChecked: boolean,
   ) => void;
 }) => {
-  const [isChecked, setIsChecked] = useState(false);
 
   const handleClick = () => {
     if (selectedNumber === 6 && !isChecked) {
       alert("You can only select 6 pokemon");
       return;
     }
-    setIsChecked(!isChecked);
-    handleSelectedPoke(id, image, name, isChecked, types);
+    handleSelectedPoke(id, image, name, types, isChecked);
   };
 
   return (
-    <div className="m-4 flex flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg">
+    <div className="flex flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg w-auto">
       <Image src={image} alt={name} width={200} height={200} />
       <h3 className="text-sm text-white">N° {id}</h3>
       <Link
@@ -62,16 +62,14 @@ const PokeCard = ({
         {name}
       </Link>
       <div className="flex flex-row items-center justify-center">
-        <div className="m-1 px-4 py-1">
-          <h4 className="text-lg font-bold text-orange-300">{types}</h4>
-        </div>
+        <h4 className="text-lg font-bold text-orange-300">{types}</h4>
       </div>
-      <label>
+      <label className="flex items-center mt-4">
         <input
           type="checkbox"
           checked={isChecked}
           className="form-checkbox h-5 w-5 text-gray-600"
-          onChange={handleClick}
+          onChange={() => handleSelectedPoke(id, image, name, types, isChecked)}
         />
       </label>
     </div>

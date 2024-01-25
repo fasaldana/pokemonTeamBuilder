@@ -21,7 +21,7 @@ model User {
 
 model Team {
   id          Int      @id @default(autoincrement())
-  teamName    String
+  teamName    String   @unique
   pokemonName String
   pokemonId   Int
   pokemonType String

@@ -21,7 +21,7 @@ const SignIn = ({ handleSignIn }: { handleSignIn: HandleSignInFunction }) => {
 
   return (
     <div className="m-4 flex flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="flex  items-center">
         <h1 className="text-2xl text-white">Sign In</h1>
 
         <input

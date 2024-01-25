@@ -34,16 +34,22 @@ const Pokedex = () => {
     id: number,
     image: string,
     name: string,
-    isChecked: boolean,
     types: string,
+    isChecked: boolean,
   ) => {
     if (isChecked) {
       setSelectedPokemon(selectedPokemon.filter((poke) => poke.name !== name));
     } else {
       if (selectedPokemon.length < 6) {
         setSelectedPokemon([...selectedPokemon, { id, image, name, types }]);
+      } else {
+        setErrorMessage("You can only select 6 pokemon");
       }
     }
+  };
+
+  const handleRemove = (id: number) => {
+    setSelectedPokemon(selectedPokemon.filter((poke) => poke.id !== id));
   };
 
   const handleSaveTeam = () => {
@@ -90,8 +96,84 @@ const Pokedex = () => {
   };
 
   return (
-    <>
-      <div className="mt-6 grid grid-cols-2 gap-4 rounded-lg bg-black bg-opacity-70 p-4 md:grid-cols-3 lg:grid-cols-4">
+    <div className="flex w-full items-center justify-center">
+      {errorMessage !== "" ? (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
+          <div className="flex flex-col items-center justify-center rounded-lg bg-red-500 p-4 shadow-lg">
+            <h2 className="text-lg text-white">{errorMessage}</h2>
+            <button
+              className="rounded bg-orange-300 px-4 py-2 font-bold text-white hover:bg-orange-400"
+              onClick={() => setErrorMessage("")}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ) : null}
+      {successMessage !== "" ? (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
+          <div className="flex flex-col items-center justify-center rounded-lg bg-green-500 p-4 shadow-lg">
+            <h2 className="text-lg text-white">{successMessage}</h2>
+            <button
+              className="rounded bg-orange-300 px-4 py-2 font-bold text-white hover:bg-orange-400"
+              onClick={() => setSuccessMessage("")}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ) : null}
+      <aside className="sticky top-0 m-4 h-full max-h-screen self-start overflow-y-scroll rounded-lg bg-black bg-opacity-70 p-4">
+        <div className="flex flex-col items-center justify-center">
+          <div className="mt- mx-4 flex flex-col items-center justify-center rounded-lg px-4 py-2 shadow-lg">
+            <div className="flex w-full justify-center gap-4">
+              <button
+                className="rounded bg-orange-300 px-4 py-2 font-bold text-white hover:bg-orange-400"
+                onClick={handleSaveTeam}
+              >
+                Save Team
+              </button>
+              <button
+                className="rounded bg-orange-300 px-4 py-2 font-bold text-white hover:bg-orange-400"
+                onClick={() => {
+                  setSelectedPokemon([]);
+                  setTeamName("");
+                }}
+              >
+                Clear
+              </button>
+            </div>
+            <input
+              type="text"
+              placeholder="Team Name"
+              value={teamName}
+              onChange={(e) => setTeamName(e.target.value)}
+              className="m-4 rounded-lg p-2 shadow-lg"
+            />
+          </div>
+          <div className="flex w-3/4 flex-col gap-4 shadow-lg">
+            {selectedPokemon.length > 0 ? (
+              selectedPokemon.map((poke) => (
+                <SelectedPoke
+                  key={poke.name}
+                  id={poke.id}
+                  image={poke.image}
+                  name={poke.name}
+                  types={poke.types}
+                  handleRemove={handleRemove}
+                />
+              ))
+            ) : (
+              <div className="m-4 flex flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg">
+                <h2 className="text-lg text-white">
+                  Select a Pokemon for your team
+                </h2>
+              </div>
+            )}
+          </div>
+        </div>
+      </aside>
+      <div className="mr-4 mt-4 grid grid-cols-2 gap-4 overflow-y-auto rounded-lg bg-black bg-opacity-70 p-4 md:grid-cols-3 lg:grid-cols-4">
         {loading ? <h1 className="text-2xl text-white">Loading...</h1> : null}
         {pokemon.map((poke) => (
           <PokeCard
@@ -105,55 +187,11 @@ const Pokedex = () => {
             weight={poke.weight}
             abilities={poke.abilities}
             selectedNumber={selectedPokemon.length}
+            isChecked={selectedPokemon.some((p) => p.id === poke.id)}
           />
         ))}
       </div>
-      <div className="fixed bottom-0 mb-4 mr-4 flex flex-col items-center justify-center">
-        {errorMessage !== "" ? (
-          <div className="m-4 flex flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg">
-            <h2 className="text-lg text-red-600">{errorMessage}</h2>
-          </div>
-        ) : null}
-        {successMessage !== "" ? (
-          <div className="m-4 flex flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg">
-            <h2 className="text-lg text-green-600">{successMessage}</h2>
-          </div>
-        ) : null}
-        <div className="m-2 flex gap-10 space-x-2 rounded-lg bg-zinc-800 p-1 shadow-lg">
-          <div className="m-4 flex flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg">
-            <button
-              className="rounded bg-orange-300 px-4 py-2 font-bold text-white hover:bg-orange-400"
-              onClick={handleSaveTeam}
-            >
-              Save Team
-            </button>
-            <input
-              type="text"
-              placeholder="Team Name"
-              value={teamName}
-              onChange={(e) => setTeamName(e.target.value)}
-              className="m-4 rounded-lg p-2 shadow-lg"
-            />
-          </div>
-          {selectedPokemon.length > 0 ? (
-            selectedPokemon.map((poke) => (
-              <SelectedPoke
-                key={poke.name}
-                image={poke.image}
-                name={poke.name}
-                types={poke.types}
-              />
-            ))
-          ) : (
-            <div className="m-4 flex flex-col items-center justify-center rounded-lg bg-zinc-800 p-4 shadow-lg">
-              <h2 className="text-lg text-white">
-                Select a Pokemon for your team
-              </h2>
-            </div>
-          )}
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 

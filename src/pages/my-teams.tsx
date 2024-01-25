@@ -4,14 +4,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Team from "~/components/Team";
 
 const MyTeams = () => {
   const [teams, setTeams] = useState({});
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const request = async () => {
-      const result = await fetch(`/api/teams/${JSON.parse(localStorage.getItem("user")).id}`);
+      const result = await fetch(
+        `/api/teams/${JSON.parse(localStorage.getItem("user")).id}`,
+      );
       const resultJson = await result.json();
       setLoading(false);
       setTeams(resultJson);
@@ -20,6 +24,7 @@ const MyTeams = () => {
   }, []);
 
   const handleDeleteTeam = async (teamName: string) => {
+    setSaving(true);
     try {
       await fetch(`/api/teams/${JSON.parse(localStorage.getItem("user")).id}`, {
         method: "DELETE",
@@ -34,6 +39,7 @@ const MyTeams = () => {
       const newTeams = { ...teams };
       delete newTeams[teamName];
       setTeams(newTeams);
+      setSaving(false);
     } catch (error) {
       console.log(error);
     }
@@ -45,25 +51,13 @@ const MyTeams = () => {
       <div className="flex flex-wrap justify-center">
         {loading ? <h1 className="text-2xl text-white">Loading...</h1> : null}
         {Object.keys(teams).map((teamName) => (
-          <div key={teamName} className="flex flex-col justify-center items-center p-4 m-4">
-            <h1 className="text-xl text-white">{teamName}</h1>
-            <div className="flex flex-wrap">
-              {teams[teamName].map((team) => (
-                <div key={team.pokemonName} className="flex flex-col justify-center items-center bg-zinc-800 rounded-xl shadow-lg m-4">
-                  <Image src={team.pokemonImg} width={150} height={150} alt="pokemon" />
-                  <h1 className="text-lg text-white">{team.pokemonName}</h1>
-                  <h1 className="text-lg text-orange-300">{team.pokemonType}</h1>
-                </div>
-              ))}
-            </div>
-            <button
-              type="button"
-              className="bg-orange-300 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded"
-              onClick={() => handleDeleteTeam(teamName)}
-            >
-              Delete team
-            </button>
-          </div>
+          <Team
+            key={teamName}
+            teamName={teamName}
+            teams={teams}
+            saving={saving}
+            handleDeleteTeam={handleDeleteTeam}
+          />
         ))}
       </div>
     </div>
