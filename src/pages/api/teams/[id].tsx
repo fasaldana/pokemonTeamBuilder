@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
@@ -67,7 +69,7 @@ export default async function handler(
 
       res.status(200).json(teams);
     } catch (error) {
-      res.status(400).json(error);
+      console.log(error);
     }
   }
 }
